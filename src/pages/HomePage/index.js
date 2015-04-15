@@ -38,7 +38,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div className='home-page'>
-        <a href="#">Log in with Github</a>
+        <a href='/auth/github'>Log in with Github</a>
       </div>
     );
   }

@@ -1,11 +1,10 @@
+require('dotenv').load();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var githubStrategy = require('passport-github');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -25,13 +24,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+require('./controllers/auth.js').session(app);
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', routes);
