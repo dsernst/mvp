@@ -5,15 +5,29 @@ passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: "http://localhost:3000/auth/github/callback"
-},
-  function (accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-    console.log('GitHub oAuth:', profile);
-    console.log(accessToken, refreshToken);
-    return done(null, profile);
-    // });
-  }
-));
+}, function (accessToken, refreshToken, profile, done) {
+  var User = require('../db/users.js');
+
+  User.findOne({accessToken: accessToken}, function (error, user) {
+    if (error) {
+      return done(error);
+    }
+
+    if (user) {
+      console.log('found a user:', profile.username);
+      done(null, user);
+    } else {
+      var newUser = new User({accessToken: accessToken, refreshToken: refreshToken, profile: profile});
+      newUser.save(function (error, user) {
+        if (error) {
+          return done(error);
+        }
+        console.log('saved new user:', profile.username);
+        return done(null, user);
+      });
+    }
+  });
+}));
 
 passport.serializeUser(function (user, done) {
   done(null, user);
