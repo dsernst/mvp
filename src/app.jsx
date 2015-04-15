@@ -10,17 +10,20 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 
 // inject:pagerequire
 var HomePage = require('./pages/HomePage');
+var SuccessPage = require('./pages/SuccessPage');
 // endinject
 
 var menuItems = [
   // inject:menuitems
   { payload: 'home', text: 'nmp' },
+  { payload: 'success', text: 'success' },
   // endinject
 ];
 
 var titles = {
   // inject:titles
   '/home': 'nmp',
+  '/success': 'success',
   // endinject
 };
 
@@ -99,6 +102,7 @@ var routes = (
   <Route name='app' path='/' handler={Master}>
     {/* inject:route */}
     <Route name='home' handler={HomePage} />
+    <Route name='success' handler={SuccessPage} />
     {/* endinject */}
     <DefaultRoute handler={HomePage} />
   </Route>
