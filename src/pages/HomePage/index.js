@@ -38,7 +38,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div className='home-page'>
-        nmp
+        <a href="#">Log in with Github</a>
       </div>
     );
   }
