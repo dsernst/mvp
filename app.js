@@ -28,7 +28,7 @@ require('./controllers/auth.js').session(app);
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/v1/users', users);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler

@@ -17,7 +17,7 @@ passport.use(new GitHubStrategy({
       console.log('found a user:', profile.username);
       done(null, user);
     } else {
-      var newUser = new User({accessToken: accessToken, refreshToken: refreshToken, profile: profile});
+      var newUser = new User({accessToken: accessToken, refreshToken: refreshToken, profile: profile, username: profile.username});
       newUser.save(function (error, user) {
         if (error) {
           return done(error);
